@@ -1538,6 +1538,14 @@ function resetWizard() {
   render();
 }
 
+function answerIhc(mode) {
+  const node = TREE.nodes[state.currentNode];
+  if (!node || node.type !== 'ihc') return;
+  // Use dedicated "?" option (idx 2) when present; fall back to idx 1 (neg) for 2-option nodes
+  const idx = (mode === 'pos') ? 0 : (mode === 'neg') ? 1 : (node.options.length > 2 ? 2 : 1);
+  answer(idx, mode);
+}
+
 function answer(optionIdx, mode) {
   const node = TREE.nodes[state.currentNode];
   if (!node || !node.options || !node.options[optionIdx]) return;
@@ -1552,7 +1560,8 @@ function answer(optionIdx, mode) {
     missing: [...state.missing],
     ambiguous: [...state.ambiguous],
     markers: { ...state.markers },
-    auditTrail: [...state.auditTrail]
+    auditTrail: [...state.auditTrail],
+    lastMorphNode: state.lastMorphNode
   });
 
   // Audit trail
@@ -1604,6 +1613,7 @@ function back() {
   state.ambiguous    = prev.ambiguous;
   state.markers      = prev.markers || {};
   state.auditTrail   = prev.auditTrail;
+  state.lastMorphNode = prev.lastMorphNode ?? state.lastMorphNode;
   render();
 }
 
@@ -1625,6 +1635,7 @@ function applyTechFlagsFromUI() {
     post_treatment:     document.getElementById('flag-post-treatment')?.checked || false,
     inadequate_quality: document.getElementById('flag-inadequate')?.checked    || false
   };
+  render();
 }
 
 function getTechWarning(marker) {
@@ -1735,8 +1746,8 @@ function render() {
     btnsHtml = `<div class="app-btns">
       <button class="app-btn-pos"     onclick="answer(0,'pos')">+ Positivo</button>
       <button class="app-btn-neg"     onclick="answer(1,'neg')">− Negativo</button>
-      <button class="app-btn-amb"     onclick="answer(0,'amb')">± Ambiguo</button>
-      <button class="app-btn-missing" onclick="answer(0,'missing')">? Non eseguito</button>
+      <button class="app-btn-amb"     onclick="answerIhc('amb')">± Ambiguo</button>
+      <button class="app-btn-missing" onclick="answerIhc('missing')">? Non eseguito</button>
     </div>`;
   } else {
     btnsHtml = '<div style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px">';
