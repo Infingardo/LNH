@@ -199,9 +199,9 @@
 
   <div class="app-tech-flags">
     <strong style="margin-right:12px">Contesto tecnico:</strong>
-    <label><input type="checkbox" id="flag-decalcified" onchange="applyTechFlagsFromUI()"> Decalcificato</label>
-    <label><input type="checkbox" id="flag-post-treatment" onchange="applyTechFlagsFromUI()"> Post-trattamento</label>
-    <label><input type="checkbox" id="flag-inadequate" onchange="applyTechFlagsFromUI()"> Qualità tecnica dubbia</label>
+    <label><input type="checkbox" id="flag-decalcified" onchange="onTechFlagChange()"> Decalcificato</label>
+    <label><input type="checkbox" id="flag-post-treatment" onchange="onTechFlagChange()"> Post-trattamento</label>
+    <label><input type="checkbox" id="flag-inadequate" onchange="onTechFlagChange()"> Qualità tecnica dubbia</label>
   </div>
 
   <div class="app-mode-bar">
@@ -1635,6 +1635,10 @@ function applyTechFlagsFromUI() {
     post_treatment:     document.getElementById('flag-post-treatment')?.checked || false,
     inadequate_quality: document.getElementById('flag-inadequate')?.checked    || false
   };
+}
+
+function onTechFlagChange() {
+  applyTechFlagsFromUI();
   render();
 }
 
@@ -1822,7 +1826,7 @@ function renderNoteScreen(node, left, right) {
 
   left.innerHTML = `
     <div class="app-question" style="color:#e65100">${escHtml(node.question)}</div>
-    <div class="app-question-note" style="line-height:1.7">${node.note}</div>
+    <div class="app-question-note" style="line-height:1.7">${escHtml(node.note)}</div>
     ${node.options.length > 0 ? `<div style="display:flex;flex-direction:column;gap:7px;margin:16px 0">${optBtns}</div>` : ''}
     <div class="app-nav-btns">
       ${backHtml}
