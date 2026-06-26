@@ -563,6 +563,50 @@ const ENTITIES = {
     notes: "Trattamento: come DLBCL — non sottotrattare.",
     hgbl_banner: false
   },
+  PTFL: {
+    name: "Linfoma follicolare pediatrico (PTFL)",
+    pattern: ["nodulare"],
+    morphology: "Follicoli espansi, irregolari, 'starry-sky'; cellule medie/blastoidi GC-derivate; alto indice mitotico",
+    ihc_pos: ["CD10", "BCL6", "CD20", "PAX5"],
+    ihc_neg: ["BCL2 (o debole)", "MUM1", "TdT"],
+    classico_markers: ["CD10", "BCL6"],
+    l2core: [
+      "FISH NEGATIVA per BCL2, BCL6, MYC, IRF4 (criterio di esclusione — nessun riarrangiamento)",
+      "Clonalità IGH/IGK (popolazione B monoclonale)",
+      "NGS: TNFRSF14, MAP2K1 (mutazioni ricorrenti definenti)"
+    ],
+    l2opt: ["Ki67 (caratteristicamente ALTO, >50%, talora >90%)", "FOXP1 (positivo — utile vs iperplasia follicolare florida)"],
+    traps: [
+      "⚠ BCL2− e MUM1− sono CARATTERISTICI: BCL2+ forte allontana verso FL adulto, MUM1+ forte verso LBCL-IRF4",
+      "⚠ Ki67 ALTO è atteso e NON deve allarmare — il paradosso del PTFL è proliferazione alta con decorso indolente (OS 5aa >95%). Non sovrastimare il grado",
+      "Età pediatrica/giovane adulto, sede testa-collo, malattia localizzata: il contesto clinico è parte della definizione",
+      "Differenziale: FL adulto (BCL2+/t(14;18)+), LBCL-IRF4 (MUM1 forte+, IRF4 riarr.), iperplasia follicolare florida (policlonale, FOXP1−)"
+    ],
+    notes: "Entità indolente a prognosi eccellente, gestione conservativa dopo escissione. Defining: GC-phenotype (CD10+/BCL6+) + BCL2−/MUM1− + Ki67 ALTO + ASSENZA di riarrangiamenti (BCL2/BCL6/MYC/IRF4) + mutazioni TNFRSF14/MAP2K1. ⚠ Non confondere alto Ki67 con aggressività.",
+    hgbl_banner: false
+  },
+  LBCL_IRF4: {
+    name: "LBCL con riarrangiamento IRF4",
+    pattern: ["nodulare", "diffuso-grandi"],
+    morphology: "Cellule grandi/blastoidi; pattern follicolare, diffuso o misto; spesso senza 'starry-sky'",
+    ihc_pos: ["MUM1/IRF4 (forte, diffuso)", "BCL6", "CD20", "PAX5"],
+    ihc_neg: ["TdT"],
+    classico_markers: ["MUM1/IRF4", "BCL6"],
+    l2core: [
+      "FISH IRF4 (riarrangiamento — criterio defining)",
+      "Hans/COO",
+      "FISH MYC + BCL2 + BCL6 (esclusione DH/TH nelle grandi cellule)"
+    ],
+    l2opt: ["CD10 (positivo in ~65%)", "BCL2 (positivo in ~60%)", "Ki67 (alto)"],
+    traps: [
+      "MUM1/IRF4 FORTE e diffuso + BCL6+ è il pattern chiave — discrimina dal PTFL (MUM1−)",
+      "BCL6 è tipicamente POSITIVO (non negativo); CD10 variabile (~65% +): la negatività NON esclude",
+      "Il defining è il riarrangiamento IRF4. DUSP22 (locus contiguo su 6p25.3) NON è equivalente: implicato in ALCL/linfomi cutanei, non in questa entità",
+      "Sottogruppo IRF4-IHC+ ma FISH-negativo: la diagnosi resta possibile se morfologia e fenotipo concordanti"
+    ],
+    notes: "Tipico di pediatrico/giovane adulto, anello di Waldeyer/testa-collo, stadio basso, prognosi favorevole con terapia. Defining: riarrangiamento IRF4 + MUM1 forte+. BCL6+, CD10+ in ~65%, BCL2+ in ~60%, Ki67 alto.",
+    hgbl_banner: false
+  },
   MCL: {
     name: "MCL classico",
     pattern: ["nodulare", "diffuso-piccole"],
@@ -1013,16 +1057,16 @@ const TREE = {
       options: [
         {
           label: "Piccole-miste (centrociti ± centroblasti)",
-          removes: ["NLPBL", "FLBCL"],
+          removes: ["NLPBL", "FLBCL", "LBCL_IRF4"],
           next: "nod_ki67"
         },
         {
           label: "Grandi (cluster CB puri / LP \"popcorn\")",
-          removes: ["FL", "MCL", "MZL", "CLL"],
+          removes: ["FL", "MCL", "MZL", "CLL", "PTFL"],
           next: "nod_grandi_arch"
         }
       ],
-      differential: ["FL", "FLBCL", "MCL", "NLPBL", "MZL", "CLL"],
+      differential: ["FL", "FLBCL", "MCL", "NLPBL", "MZL", "CLL", "PTFL", "LBCL_IRF4"],
       trap: null
     },
 
@@ -1143,11 +1187,25 @@ const TREE = {
       note: "BCL2+ nei centri germinativi neoplastici: criterio chiave per FL t(14;18). Valutare selettivamente le cellule neoplastiche — non lo stroma reattivo.",
       options: [
         { label: "+", removes: [],  next: "result_FL" },
-        { label: "−", removes: [],  next: "result_FL" },
+        { label: "−", removes: [],  next: "nod_ptfl_check" },
         { label: "?", removes: [],  next: "result_FL" }
       ],
       differential: null,
-      trap: "BCL2− non esclude FL: 10–15% è FISH t(14;18)+ ma BCL2 IHC−. Casi dubbi BCL2−: richiedere FISH BCL2 t(14;18) o PCR IGH-BCL2 (MBR/mcr — più sensibile per varianti a minor breakpoint cluster). ⚠ FL3B (WHO-HAEM5: FLBCL) è spesso BCL2− e t(14;18)−, con BCL6 riarrangiato — biologicamente distinto da FL1-2, si tratta come DLBCL: non è un 'FL indolente BCL2-negativo'. Fissazione inadeguata falsifica il risultato. ⚠ FL inguinale: CD23 espresso in 30–40% — non confondere con CLL/SLL."
+      trap: "BCL2− non esclude FL: 10–15% è FISH t(14;18)+ ma BCL2 IHC−. Casi dubbi BCL2−: richiedere FISH BCL2 t(14;18) o PCR IGH-BCL2 (MBR/mcr — più sensibile per varianti a minor breakpoint cluster). ⚠ FL3B (WHO-HAEM5: FLBCL) è spesso BCL2− e t(14;18)−, con BCL6 riarrangiato — biologicamente distinto da FL1-2, si tratta come DLBCL: non è un 'FL indolente BCL2-negativo'. ⚠ BCL2− + giovane + Ki67 alto → considerare PTFL. Fissazione inadeguata falsifica il risultato. ⚠ FL inguinale: CD23 espresso in 30–40% — non confondere con CLL/SLL."
+    },
+
+    nod_ptfl_check: {
+      type: "choice",
+      question: "BCL2 negativo — contesto clinico e profilo proliferativo",
+      note: "Il BCL2 negativo apre il differenziale dei FL BCL2-R-negativi. Discriminare per età, sede, Ki67, MUM1.",
+      options: [
+        { label: "Adulto · Ki67 basso-intermedio · architettura FL classica (BCL2− non esclude FL)", removes: [], next: "result_FL" },
+        { label: "Pediatrico/giovane · testa-collo · Ki67 ALTO · 'starry-sky' · MUM1− → PTFL", removes: [], next: "result_PTFL" },
+        { label: "Cellule grandi · MUM1 FORTE+ · giovane/Waldeyer → LBCL-IRF4", removes: [], next: "result_LBCL_IRF4" },
+        { label: "? Incerto — rivaluta", removes: [], next: "result_FL" }
+      ],
+      differential: null,
+      trap: "PTFL: BCL2−, MUM1−, Ki67 ALTO (paradosso prolif-alta/indolente), FISH negativa (BCL2/BCL6/MYC/IRF4), TNFRSF14/MAP2K1 mutati. LBCL-IRF4: MUM1 forte+, BCL6+, IRF4 riarrangiato. FL adulto BCL2−: 10–15% comunque t(14;18)+ alla FISH. Il MUM1 è il discriminante rapido PTFL (−) vs IRF4 (forte +)."
     },
 
     // Step 1: architettura + CD10 (discriminante reale NLPBL vs FLBCL)
@@ -1156,11 +1214,12 @@ const TREE = {
       question: "Architettura e CD10",
       note: "Pattern delle cellule grandi e profilo GC. Le cellule LP (NLPBL) sono BCL6+ ma CD10−; FLBCL mostra sheets/cluster di centroblasti spesso CD10+.",
       options: [
-        { label: "LP (\"popcorn\") sparse in background B nodulare · CD10−", removes: ["FLBCL"], next: "nod_grandi_rosette" },
-        { label: "Cluster / sheets di centroblasti · CD10+ e/o BCL2±", removes: ["NLPBL"], next: "result_FLBCL" }
+        { label: "LP (\"popcorn\") sparse in background B nodulare · CD10−", removes: ["FLBCL", "LBCL_IRF4"], next: "nod_grandi_rosette" },
+        { label: "Cluster / sheets di centroblasti · CD10+ e/o BCL2±", removes: ["NLPBL", "LBCL_IRF4"], next: "result_FLBCL" },
+        { label: "Pattern follicolare/diffuso/misto · MUM1 FORTE+ · giovane/Waldeyer", removes: ["NLPBL", "FLBCL"], next: "result_LBCL_IRF4" }
       ],
       differential: null,
-      trap: "Cellule LP: BCL6+ ma CD10−. CD10+ in proliferazione B nodulare → pensare FL/FLBCL, non NLPBL. Meshwork FDC (CD21/CD23) + background di piccoli B depongono per NLPBL."
+      trap: "Cellule LP: BCL6+ ma CD10−. CD10+ in proliferazione B nodulare → pensare FL/FLBCL, non NLPBL. Meshwork FDC (CD21/CD23) + background di piccoli B depongono per NLPBL. ⚠ MUM1 forte+ diffuso in giovane (Waldeyer/testa-collo) → LBCL-IRF4 (confermare FISH IRF4)."
     },
 
     // Step 2: rosette come CONFERMA di supporto (non defining)
@@ -1518,6 +1577,8 @@ const TREE = {
     // ════════════════════ NODI RISULTATO ════════════════════════
     result_FL:        { type: "result", entity: "FL"        },
     result_FLBCL:     { type: "result", entity: "FLBCL"     },
+    result_PTFL:      { type: "result", entity: "PTFL"      },
+    result_LBCL_IRF4: { type: "result", entity: "LBCL_IRF4" },
     result_MCL:       { type: "result", entity: "MCL"       },
     result_NLPBL:     { type: "result", entity: "NLPBL"     },
     result_MZL:       { type: "result", entity: "MZL"       },
@@ -1929,6 +1990,7 @@ function renderResult(entityKey, leftContainer, rightContainer) {
   const TAGLIA = {
     FL: 'piccola e media taglia', FLBCL: 'grande taglia', MCL: 'piccola e media taglia',
     NLPBL: 'grande taglia', MZL: 'piccola e media taglia', CLL: 'piccola taglia',
+    PTFL: 'media taglia / blastoide', LBCL_IRF4: 'grande taglia',
     DLBCL: 'grande taglia', DLBCL_GCB: 'grande taglia', DLBCL_nonGCB: 'grande taglia',
     HGBL_DH: 'grande taglia', HGBL_MYC_BCL6: 'taglia medio-grande / blastoide', BURKITT: 'media taglia', PMBL: 'grande taglia',
     THRLBCL: 'grande taglia', MCL_BLAST: 'taglia medio-grande', MCL_PLEO: 'grande taglia',
