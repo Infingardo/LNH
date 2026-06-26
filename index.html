@@ -609,14 +609,19 @@ const ENTITIES = {
     ihc_pos: ["CD20"],
     ihc_neg: ["CD10", "CD5", "CycD1/BCL1"],
     classico_markers: ["CD20"],
-    l2core: ["Clonalità IGH/IGK", "FISH MALT1/BIRC3/BCL10"],
-    l2opt: ["FISH sede-specifica", "H. pylori (MALT gastrico)", "CD43 (co-espressione supporta linfoma vs iperplasia reattiva)"],
+    l2core: [
+      "Clonalità IGH/IGK",
+      "FISH sede-specifica: MALT1 t(11;18)/t(14;18)/t(1;14) per MZL extranodale/MALT — NOTCH2 mut + KLF2 per MZL splenico (SMZL) — TNFAIP3 del per MZL nodale",
+      "FISH BIRC3/BCL10 se MALT extranodale"
+    ],
+    l2opt: ["H. pylori (MALT gastrico — obbligatorio per stadiazione eradicazione)", "CD43 (co-espressione supporta linfoma vs iperplasia reattiva)", "NGS NOTCH2/KLF2/TNFAIP3"],
     traps: [
       "Diagnosi per esclusione: nessun marcatore positivo defining. Robustezza intrinsecamente limitata — si fonda su CD5−/CD10−/CycD1− + clonalità",
+      "Il profilo genetico è topografia-dipendente: MALT1 per extranodale, NOTCH2/KLF2 per splenico, TNFAIP3 per nodale — applicare FISH generica 'MALT' senza contesto topografico è subottimale",
       "CD5+ o CD10+ refertato: argomenta CONTRO MZL (riconsiderare MCL/CLL o FL)",
       "Annessina A1− discrimina da HCL"
     ],
-    notes: "Diagnosi di esclusione: l'assenza di un positivo defining rende la robustezza meno informativa. Pesare clonalità (IGH/IGK) e contesto.",
+    notes: "Diagnosi di esclusione: l'assenza di un positivo defining rende la robustezza meno informativa. Il workup genetico va guidato dalla sede: extranodale (MALT1), splenico (NOTCH2/KLF2), nodale (TNFAIP3). Pesare clonalità (IGH/IGK) e contesto.",
     hgbl_banner: false
   },
   CLL: {
@@ -813,19 +818,21 @@ const ENTITIES = {
     ihc_neg: ["TdT", "CycD1/BCL1"],
     classico_markers: ["CD20"],
     l2core: [
+      "⚠ FISH obbligatorio PRIMA di refertare HGBL NOS — non è diagnosi clinica senza workup citogenetico completo",
       "1. FISH MYC + BCL2 + BCL6 → se pos: riclassificare come HGBL-DH/TH",
-      "2. FISH MYC isolato + morfologia → se t(8;14) + ID3/TCF3: Burkitt",
+      "2. FISH MYC isolato + morfologia → se t(8;14) + ID3/TCF3/TCF4 mut: riconsiderare Burkitt",
       "3. TdT + CD34 → esclude B-ALL",
       "4. Cyclin D1/SOX11 → esclude MCL blastoide",
-      "5. Residuo: HGBL NOS"
+      "5. Residuo con workup completo negativo: HGBL NOS"
     ],
     l2opt: ["NGS ID3/TCF3/CCND3", "GEP"],
     traps: [
-      "Diagnosi per esclusione — completare workup DH/TH → Burkitt → B-ALL → MCL blastoide prima di concludere",
+      "⚠ Non refertare HGBL NOS senza FISH MYC+BCL2+BCL6 eseguita e negativa — la diagnosi senza FISH è clinicamente inutilizzabile",
       "MYC singolo riarrangiato (senza BCL2/BCL6) → WHO-HAEM5: classificare come DLBCL NOS, non HGBL",
-      "Spesso indica campione subottimale, biologia incompleta, o caso borderline DLBCL/Burkitt"
+      "Spesso indica campione subottimale, biologia incompleta, o caso borderline DLBCL/Burkitt — indicare la limitazione nel referto",
+      "Se FISH non eseguibile (campione inadeguato): segnalarlo esplicitamente nel referto come limitazione diagnostica critica"
     ],
-    notes: "Categoria residuale — diagnosi per esclusione. Rivalutare con workup completo.",
+    notes: "Categoria residuale — diagnosi per esclusione. FISH MYC+BCL2+BCL6 è prerequisito, non opzione. Senza FISH il referto è incompleto.",
     hgbl_banner: true
   },
   HCL: {
@@ -855,10 +862,11 @@ const ENTITIES = {
     l2opt: ["CXCR4 (prognostico)", "Esclusione MZL plasmacitoide (MALT1-FISH neg)"],
     traps: [
       "MUM1+: è un marker di differenziazione plasmacitoide — positivo sia in LPL che in MZL plasmacitoide; non discriminante",
-      "MYD88 L265P assente in ~5–10% dei LPL: non esclude la diagnosi se morfologia e clinica sono concordanti",
-      "Differenziazione da MZL plasmacitoide: MYD88 L265P+ (LPL) vs MALT1-riarrangiamento (MZL)"
+      "MYD88 L265P assente in ~10% dei LPL/WM: non esclude la diagnosi se morfologia e clinica sono concordanti — ma questi casi hanno prognosi peggiore e profilo molecolare distinto (più frequente CXCR4 mut, TP53 del); segnalarlo nel referto",
+      "MYD88 wt WM: considerare NGS allargato (CXCR4, TP53, ARID1A) — la diagnosi resta possibile ma richiede maggiore supporto morfologico e clinico",
+      "Differenziazione da MZL plasmacitoide: MYD88 L265P+ (LPL) vs MALT1-riarrangiamento o NOTCH2 mut (MZL) — in caso MYD88 wt il discriminante morfologico e clinico diventa critico"
     ],
-    notes: null,
+    notes: "MYD88 L265P è il marcatore molecolare chiave, ma assente in ~10% dei casi: la sua negatività non esclude LPL/WM, ma impone workup alternativo e ha implicazioni prognostiche (risposta inferiore a ibrutinib).",
     hgbl_banner: false
   }
 };
@@ -1037,7 +1045,7 @@ const TREE = {
         { label: "?", removes: [],      next: "nod_mcl_sox11" }
       ],
       differential: null,
-      trap: "CycD1 focale/debole: non equivale a MCL. HCL può dare CycD1± — discriminante: Annessina A1 + BRAF V600E."
+      trap: "CycD1 focale/debole: due scenari distinti. (1) Sospetto HCL: CycD1 è aberrante e debole/focale — discriminante Annessina A1 + BRAF V600E (non SOX11). (2) Sospetto MCL CycD1-debole: richiedere SOX11 IHC + FISH CCND1 — se SOX11+ e/o FISH pos è MCL indipendentemente dall'intensità CycD1. Non usare Annessina A1 per risolvere il dubbio MCL."
     },
 
     nod_mcl_sox11: {
@@ -1119,7 +1127,7 @@ const TREE = {
         { label: "?", removes: [],  next: "result_FL" }
       ],
       differential: null,
-      trap: "BCL2− non esclude FL: 10–15% è FISH t(14;18)+ ma BCL2 IHC−. Casi dubbi BCL2−: richiedere FISH BCL2 t(14;18) o PCR IGH-BCL2 (MBR/mcr — più sensibile per varianti a minor breakpoint cluster). FL 3B/FLBCL spesso BCL2−. Fissazione inadeguata falsifica il risultato. ⚠ FL inguinale: CD23 espresso in 30–40% — non confondere con CLL/SLL."
+      trap: "BCL2− non esclude FL: 10–15% è FISH t(14;18)+ ma BCL2 IHC−. Casi dubbi BCL2−: richiedere FISH BCL2 t(14;18) o PCR IGH-BCL2 (MBR/mcr — più sensibile per varianti a minor breakpoint cluster). ⚠ FL3B (WHO-HAEM5: FLBCL) è spesso BCL2− e t(14;18)−, con BCL6 riarrangiato — biologicamente distinto da FL1-2, si tratta come DLBCL: non è un 'FL indolente BCL2-negativo'. Fissazione inadeguata falsifica il risultato. ⚠ FL inguinale: CD23 espresso in 30–40% — non confondere con CLL/SLL."
     },
 
     // Step 1: architettura + CD10 (discriminante reale NLPBL vs FLBCL)
