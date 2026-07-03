@@ -363,7 +363,7 @@
     <td class="l2o">GEP GCB/ABC · NGS · CD30</td>
   </tr>
   <tr>
-    <td class="entity">HGBL-DH/TH <small>(MYC+BCL2 e/o BCL6)</small></td>
+    <td class="entity">HGBL-DH/TH <small>(MYC+BCL2 ± BCL6)</small></td>
     <td>Grandi o blastoid</td>
     <td><span class="pos">MYC IHC ≥40% BCL2 IHC ≥50%</span> Ki67 elevato</td>
     <td class="l2c"><strong>FISH MYC + BCL2 + BCL6 — OBBLIGATORIO</strong></td>
@@ -409,7 +409,7 @@
     <td>Blastoid/intermedia tra DLBCL e Burkitt · Ki67 &gt;80%</td>
     <td><span class="pos">CD20+ TdT−</span> <span class="neg">CycD1−</span> MYC IHC variabile · Ki67 &gt;80%</td>
     <td class="l2c"><strong>Percorso di esclusione (in ordine):</strong><br>
-      1. FISH MYC+BCL2+BCL6 → se pos: HGBL-DH/TH<br>
+      1. FISH MYC+BCL2+BCL6 → MYC+BCL2(±BCL6): HGBL-DH/TH · MYC+BCL6 senza BCL2: DLBCL/HGBL NOS (WHO5) o entità provvisoria (ICC)<br>
       2. FISH MYC + morfologia → se t(8;14)+ID3/TCF3: Burkitt<br>
       3. TdT+CD34 → esclude B-ALL<br>
       4. CycD1/SOX11 → esclude MCL blastoide<br>
@@ -417,7 +417,7 @@
     <td class="l2o">NGS ID3/TCF3/CCND3 · GEP · MYC singolo senza BCL2/BCL6 → DLBCL (WHO-HAEM5)</td>
   </tr>
 </table>
-<div class="warn">⚠ Double expressor (MYC IHC ≥40% + BCL2 IHC ≥50%) ≠ DH/TH: richiedere FISH sempre. · MYC singolo riarrangiato (no BCL2/BCL6) → DLBCL per WHO-HAEM5. · PMBL: diagnosi clinico-radiologica + IHC; FISH non definitiva. · HGBL NOS: diagnosi per esclusione — seguire il percorso a 4 step.</div>
+<div class="warn">⚠ Double expressor (MYC IHC ≥40% + BCL2 IHC ≥50%) ≠ DH/TH: richiedere FISH sempre. · MYC singolo riarrangiato (no BCL2/BCL6) → DLBCL per WHO-HAEM5. · MYC+BCL6 riarrangiati SENZA BCL2 → WHO-HAEM5: DLBCL/HGBL NOS (sottotipo genetico); ICC 2022: HGBL con MYC e BCL6 (entità provvisoria) — NON è double-hit per WHO5. · PMBL: diagnosi clinico-radiologica + IHC; FISH non definitiva. · HGBL NOS: diagnosi per esclusione — seguire il percorso a 4 step.</div>
 
 <!-- ==================== LEVEL 2: DIFFUSO PICCOLE ==================== -->
 <div class="section-header dif-s">▲ PATTERN DIFFUSO — PICCOLE / INTERMEDIE CELLULE</div>
@@ -505,7 +505,7 @@
   <tr><th style="width:20%">Entità</th><th style="width:40%">Fenotipo IHC chiave</th><th style="width:18%">Evento genetico</th><th>Nota</th></tr>
   <tr><td class="entity">DLBCL NOS — GCB</td><td><span class="pos">CD10+</span> oppure <span class="pos">BCL6+</span> <span class="neg">MUM1−</span> (Hans)</td><td>—</td><td>Cutoff Hans 30%</td></tr>
   <tr><td class="entity">DLBCL NOS — non-GCB</td><td><span class="neg">CD10−</span> <span class="pos">MUM1+</span> (o CD10− BCL6−)</td><td>—</td><td>Cutoff Hans 30%</td></tr>
-  <tr><td class="entity">HGBL-DH/TH</td><td>CD10+ BCL6+ — fenotipo non sufficiente</td><td><strong>MYC + BCL2 e/o BCL6 (FISH) = defining</strong></td><td>FISH obbligatoria</td></tr>
+  <tr><td class="entity">HGBL-DH/TH</td><td>CD10+ BCL6+ — fenotipo non sufficiente</td><td><strong>MYC + BCL2 ± BCL6 (FISH) = defining</strong></td><td>FISH obbligatoria · MYC+BCL6 senza BCL2 = categoria distinta</td></tr>
   <tr><td class="entity">Burkitt</td><td><span class="pos">CD10+ BCL6+ MYC+</span> <span class="neg">BCL2−</span> Ki67 ~100%</td><td>t(8;14) MYC (single-hit)</td><td>BCL2 negativo è atteso</td></tr>
   <tr><td class="entity">PMBL</td><td><span class="pos">CD30+ (debole/eterog) CD23+ MAL+</span> CD20+</td><td>9p24 (PDL1/PDL2)</td><td>Mediastino · clinico-radiologica · FISH non definitiva</td></tr>
   <tr><td class="entity">NLPBL</td><td><span class="pos">CD20+ BCL6+ OCT2+ BOB1+</span> EMA± <span class="neg">CD10− CD30− CD15−</span></td><td>—</td><td>Nodulare · rosette PD1+ (o CD57+) di supporto · LP cells CD10−</td></tr>
@@ -563,6 +563,50 @@ const ENTITIES = {
     notes: "Trattamento: come DLBCL — non sottotrattare.",
     hgbl_banner: false
   },
+  PTFL: {
+    name: "Linfoma follicolare pediatrico (PTFL)",
+    pattern: ["nodulare"],
+    morphology: "Follicoli espansi, irregolari, 'starry-sky'; cellule medie/blastoidi GC-derivate; alto indice mitotico",
+    ihc_pos: ["CD10", "BCL6", "CD20", "PAX5"],
+    ihc_neg: ["BCL2 (o debole)", "MUM1", "TdT"],
+    classico_markers: ["CD10", "BCL6"],
+    l2core: [
+      "FISH NEGATIVA per BCL2, BCL6, MYC, IRF4 (criterio di esclusione — nessun riarrangiamento)",
+      "Clonalità IGH/IGK (popolazione B monoclonale)",
+      "NGS: TNFRSF14, MAP2K1 (mutazioni ricorrenti definenti)"
+    ],
+    l2opt: ["Ki67 (caratteristicamente ALTO, >50%, talora >90%)", "FOXP1 (positivo — utile vs iperplasia follicolare florida)"],
+    traps: [
+      "⚠ BCL2− e MUM1− sono CARATTERISTICI: BCL2+ forte allontana verso FL adulto, MUM1+ forte verso LBCL-IRF4",
+      "⚠ Ki67 ALTO è atteso e NON deve allarmare — il paradosso del PTFL è proliferazione alta con decorso indolente (OS 5aa >95%). Non sovrastimare il grado",
+      "Età pediatrica/giovane adulto, sede testa-collo, malattia localizzata: il contesto clinico è parte della definizione",
+      "Differenziale: FL adulto (BCL2+/t(14;18)+), LBCL-IRF4 (MUM1 forte+, IRF4 riarr.), iperplasia follicolare florida (policlonale, FOXP1−)"
+    ],
+    notes: "Entità indolente a prognosi eccellente, gestione conservativa dopo escissione. Defining: GC-phenotype (CD10+/BCL6+) + BCL2−/MUM1− + Ki67 ALTO + ASSENZA di riarrangiamenti (BCL2/BCL6/MYC/IRF4) + mutazioni TNFRSF14/MAP2K1. ⚠ Non confondere alto Ki67 con aggressività.",
+    hgbl_banner: false
+  },
+  LBCL_IRF4: {
+    name: "LBCL con riarrangiamento IRF4",
+    pattern: ["nodulare", "diffuso-grandi"],
+    morphology: "Cellule grandi/blastoidi; pattern follicolare, diffuso o misto; spesso senza 'starry-sky'",
+    ihc_pos: ["MUM1/IRF4 (forte, diffuso)", "BCL6", "CD20", "PAX5"],
+    ihc_neg: ["TdT"],
+    classico_markers: ["MUM1/IRF4", "BCL6"],
+    l2core: [
+      "FISH IRF4 (riarrangiamento — criterio defining)",
+      "Hans/COO",
+      "FISH MYC + BCL2 + BCL6 (esclusione DH/TH nelle grandi cellule)"
+    ],
+    l2opt: ["CD10 (positivo in ~65%)", "BCL2 (positivo in ~60%)", "Ki67 (alto)"],
+    traps: [
+      "MUM1/IRF4 FORTE e diffuso + BCL6+ è il pattern chiave — discrimina dal PTFL (MUM1−)",
+      "BCL6 è tipicamente POSITIVO (non negativo); CD10 variabile (~65% +): la negatività NON esclude",
+      "Il defining è il riarrangiamento IRF4. DUSP22 (locus contiguo su 6p25.3) NON è equivalente: implicato in ALCL/linfomi cutanei, non in questa entità",
+      "Sottogruppo IRF4-IHC+ ma FISH-negativo: la diagnosi resta possibile se morfologia e fenotipo concordanti"
+    ],
+    notes: "Tipico di pediatrico/giovane adulto, anello di Waldeyer/testa-collo, stadio basso, prognosi favorevole con terapia. Defining: riarrangiamento IRF4 + MUM1 forte+. BCL6+, CD10+ in ~65%, BCL2+ in ~60%, Ki67 alto.",
+    hgbl_banner: false
+  },
   MCL: {
     name: "MCL classico",
     pattern: ["nodulare", "diffuso-piccole"],
@@ -611,17 +655,18 @@ const ENTITIES = {
     classico_markers: ["CD20"],
     l2core: [
       "Clonalità IGH/IGK",
-      "FISH sede-specifica: MALT1 t(11;18)/t(14;18)/t(1;14) per MZL extranodale/MALT — NOTCH2 mut + KLF2 per MZL splenico (SMZL) — TNFAIP3 del per MZL nodale",
+      "FISH sede-specifica: MALT1 t(11;18)/t(14;18)/t(1;14) per MZL extranodale/MALT — del(7q31) + NOTCH2 mut + KLF2 per MZL splenico (SMZL) — TNFAIP3 del per MZL nodale",
       "FISH BIRC3/BCL10 se MALT extranodale"
     ],
-    l2opt: ["H. pylori (MALT gastrico — obbligatorio per stadiazione eradicazione)", "CD43 (co-espressione supporta linfoma vs iperplasia reattiva)", "NGS NOTCH2/KLF2/TNFAIP3"],
+    l2opt: ["H. pylori (MALT gastrico — obbligatorio per stadiazione eradicazione)", "CD43 (co-espressione supporta linfoma vs iperplasia reattiva)", "NGS NOTCH2/KLF2/TNFAIP3", "del(7q31) — citogenetica/FISH, lesione più caratteristica dell'SMZL (~30–40%)"],
     traps: [
       "Diagnosi per esclusione: nessun marcatore positivo defining. Robustezza intrinsecamente limitata — si fonda su CD5−/CD10−/CycD1− + clonalità",
-      "Il profilo genetico è topografia-dipendente: MALT1 per extranodale, NOTCH2/KLF2 per splenico, TNFAIP3 per nodale — applicare FISH generica 'MALT' senza contesto topografico è subottimale",
+      "Il profilo genetico è topografia-dipendente: MALT1 per extranodale, NOTCH2/KLF2/del(7q) per splenico, TNFAIP3 per nodale — applicare FISH generica 'MALT' senza contesto topografico è subottimale",
+      "SMZL: la del(7q31) è la lesione citogenetica più ricorrente (~30–40%), spesso più informativa morfologicamente delle singole mutazioni; NOTCH2 e KLF2 sono i driver mutazionali (frequenze sovrapponibili, ~20–40% ciascuno — nessuno dei due è 'il' driver esclusivo)",
       "CD5+ o CD10+ refertato: argomenta CONTRO MZL (riconsiderare MCL/CLL o FL)",
       "Annessina A1− discrimina da HCL"
     ],
-    notes: "Diagnosi di esclusione: l'assenza di un positivo defining rende la robustezza meno informativa. Il workup genetico va guidato dalla sede: extranodale (MALT1), splenico (NOTCH2/KLF2), nodale (TNFAIP3). Pesare clonalità (IGH/IGK) e contesto.",
+    notes: "Diagnosi di esclusione: l'assenza di un positivo defining rende la robustezza meno informativa. Il workup genetico va guidato dalla sede: extranodale (MALT1), splenico (del(7q)/NOTCH2/KLF2), nodale (TNFAIP3). Pesare clonalità (IGH/IGK) e contesto.",
     hgbl_banner: false
   },
   CLL: {
@@ -712,7 +757,7 @@ const ENTITIES = {
     hgbl_banner: false
   },
   HGBL_DH: {
-    name: "HGBL con riarrangiamento MYC e BCL2 e/o BCL6 (DH/TH)",
+    name: "DLBCL/HGBL con MYC e BCL2 (± BCL6) — DH/TH",
     pattern: ["diffuso-grandi"],
     morphology: "Grandi, talora blastoidi",
     ihc_pos: ["MYC IHC (>40%)", "BCL2 IHC (>50%)"],
@@ -722,9 +767,28 @@ const ENTITIES = {
     l2opt: ["GEP (spesso GCB)", "NGS"],
     traps: [
       "Double expressor ≠ DH/TH — solo FISH conferma il riarrangiamento",
-      "MYC IHC cutoff ≥40% (alcuni usano ≥50%): non standardizzato"
+      "MYC IHC cutoff ≥40% (alcuni usano ≥50%): non standardizzato",
+      "Categoria defining (WHO-HAEM5 + ICC): MYC + BCL2 riarrangiati. Il BCL6 concomitante (triple-hit) rientra qui, ma MYC + BCL6 SENZA BCL2 è una categoria diversa — non refertarlo come DH/TH (vedi entità dedicata)"
     ],
-    notes: null,
+    notes: "WHO-HAEM5: il double-hit richiede MYC + BCL2 (con o senza BCL6). Prognosi sfavorevole con R-CHOP → regimi dose-intensive (DA-EPOCH-R). NB: profilassi SNC raccomandata.",
+    hgbl_banner: false
+  },
+  HGBL_MYC_BCL6: {
+    name: "HGBL con MYC e BCL6 (BCL2 non riarrangiato)",
+    pattern: ["diffuso-grandi"],
+    morphology: "Grandi o intermedie/blastoidi",
+    ihc_pos: ["MYC IHC (variabile)"],
+    ihc_neg: [],
+    classico_markers: ["MYC IHC"],
+    l2core: ["FISH MYC + BCL2 + BCL6 (documentato: MYC+ BCL6+ BCL2−)"],
+    l2opt: ["GEP", "NGS"],
+    traps: [
+      "⚠ Divergenza classificativa — WHO-HAEM5: NON è double-hit; va refertato come DLBCL NOS o HGBL NOS secondo morfologia (sottotipo genetico MYC/BCL6). ICC 2022: entità provvisoria 'HGBL con MYC e BCL6'",
+      "Il pannello FISH si richiede sempre completo (MYC+BCL2+BCL6); la divergenza è solo nell'interpretazione del risultato MYC+/BCL6+/BCL2−",
+      "Pseudo-double-hit: in una quota di casi il partner di MYC è BCL6 stesso — biologicamente eterogeneo, meno definito dei MYC/BCL2",
+      "Esprimere nel referto la classificazione adottata (WHO-HAEM5 vs ICC) per non generare ambiguità terapeutica"
+    ],
+    notes: "Caso MYC riarrangiato + BCL6 riarrangiato + BCL2 NON riarrangiato. WHO-HAEM5 ha rimosso questo gruppo dalla categoria double-hit (→ DLBCL/HGBL NOS). ICC 2022 lo mantiene come entità provvisoria. Outcome riportato sfavorevole: alcuni trattano come alto grado. Dichiarare la classificazione nel referto.",
     hgbl_banner: false
   },
   BURKITT: {
@@ -993,16 +1057,16 @@ const TREE = {
       options: [
         {
           label: "Piccole-miste (centrociti ± centroblasti)",
-          removes: ["NLPBL", "FLBCL"],
+          removes: ["NLPBL", "FLBCL", "LBCL_IRF4"],
           next: "nod_ki67"
         },
         {
           label: "Grandi (cluster CB puri / LP \"popcorn\")",
-          removes: ["FL", "MCL", "MZL", "CLL"],
+          removes: ["FL", "MCL", "MZL", "CLL", "PTFL"],
           next: "nod_grandi_arch"
         }
       ],
-      differential: ["FL", "FLBCL", "MCL", "NLPBL", "MZL", "CLL"],
+      differential: ["FL", "FLBCL", "MCL", "NLPBL", "MZL", "CLL", "PTFL", "LBCL_IRF4"],
       trap: null
     },
 
@@ -1123,11 +1187,25 @@ const TREE = {
       note: "BCL2+ nei centri germinativi neoplastici: criterio chiave per FL t(14;18). Valutare selettivamente le cellule neoplastiche — non lo stroma reattivo.",
       options: [
         { label: "+", removes: [],  next: "result_FL" },
-        { label: "−", removes: [],  next: "result_FL" },
+        { label: "−", removes: [],  next: "nod_ptfl_check" },
         { label: "?", removes: [],  next: "result_FL" }
       ],
       differential: null,
-      trap: "BCL2− non esclude FL: 10–15% è FISH t(14;18)+ ma BCL2 IHC−. Casi dubbi BCL2−: richiedere FISH BCL2 t(14;18) o PCR IGH-BCL2 (MBR/mcr — più sensibile per varianti a minor breakpoint cluster). ⚠ FL3B (WHO-HAEM5: FLBCL) è spesso BCL2− e t(14;18)−, con BCL6 riarrangiato — biologicamente distinto da FL1-2, si tratta come DLBCL: non è un 'FL indolente BCL2-negativo'. Fissazione inadeguata falsifica il risultato. ⚠ FL inguinale: CD23 espresso in 30–40% — non confondere con CLL/SLL."
+      trap: "BCL2− non esclude FL: 10–15% è FISH t(14;18)+ ma BCL2 IHC−. Casi dubbi BCL2−: richiedere FISH BCL2 t(14;18) o PCR IGH-BCL2 (MBR/mcr — più sensibile per varianti a minor breakpoint cluster). ⚠ FL3B (WHO-HAEM5: FLBCL) è spesso BCL2− e t(14;18)−, con BCL6 riarrangiato — biologicamente distinto da FL1-2, si tratta come DLBCL: non è un 'FL indolente BCL2-negativo'. ⚠ BCL2− + giovane + Ki67 alto → considerare PTFL. Fissazione inadeguata falsifica il risultato. ⚠ FL inguinale: CD23 espresso in 30–40% — non confondere con CLL/SLL."
+    },
+
+    nod_ptfl_check: {
+      type: "choice",
+      question: "BCL2 negativo — contesto clinico e profilo proliferativo",
+      note: "Il BCL2 negativo apre il differenziale dei FL BCL2-R-negativi. Discriminare per età, sede, Ki67, MUM1.",
+      options: [
+        { label: "Adulto · Ki67 basso-intermedio · architettura FL classica (BCL2− non esclude FL)", removes: [], next: "result_FL" },
+        { label: "Pediatrico/giovane · testa-collo · Ki67 ALTO · 'starry-sky' · MUM1− → PTFL", removes: [], next: "result_PTFL" },
+        { label: "Cellule grandi · MUM1 FORTE+ · giovane/Waldeyer → LBCL-IRF4", removes: [], next: "result_LBCL_IRF4" },
+        { label: "? Incerto — rivaluta", removes: [], next: "result_FL" }
+      ],
+      differential: null,
+      trap: "PTFL: BCL2−, MUM1−, Ki67 ALTO (paradosso prolif-alta/indolente), FISH negativa (BCL2/BCL6/MYC/IRF4), TNFRSF14/MAP2K1 mutati. LBCL-IRF4: MUM1 forte+, BCL6+, IRF4 riarrangiato. FL adulto BCL2−: 10–15% comunque t(14;18)+ alla FISH. Il MUM1 è il discriminante rapido PTFL (−) vs IRF4 (forte +)."
     },
 
     // Step 1: architettura + CD10 (discriminante reale NLPBL vs FLBCL)
@@ -1136,11 +1214,12 @@ const TREE = {
       question: "Architettura e CD10",
       note: "Pattern delle cellule grandi e profilo GC. Le cellule LP (NLPBL) sono BCL6+ ma CD10−; FLBCL mostra sheets/cluster di centroblasti spesso CD10+.",
       options: [
-        { label: "LP (\"popcorn\") sparse in background B nodulare · CD10−", removes: ["FLBCL"], next: "nod_grandi_rosette" },
-        { label: "Cluster / sheets di centroblasti · CD10+ e/o BCL2±", removes: ["NLPBL"], next: "result_FLBCL" }
+        { label: "LP (\"popcorn\") sparse in background B nodulare · CD10−", removes: ["FLBCL", "LBCL_IRF4"], next: "nod_grandi_rosette" },
+        { label: "Cluster / sheets di centroblasti · CD10+ e/o BCL2±", removes: ["NLPBL", "LBCL_IRF4"], next: "result_FLBCL" },
+        { label: "Pattern follicolare/diffuso/misto · MUM1 FORTE+ · giovane/Waldeyer", removes: ["NLPBL", "FLBCL"], next: "result_LBCL_IRF4" }
       ],
       differential: null,
-      trap: "Cellule LP: BCL6+ ma CD10−. CD10+ in proliferazione B nodulare → pensare FL/FLBCL, non NLPBL. Meshwork FDC (CD21/CD23) + background di piccoli B depongono per NLPBL."
+      trap: "Cellule LP: BCL6+ ma CD10−. CD10+ in proliferazione B nodulare → pensare FL/FLBCL, non NLPBL. Meshwork FDC (CD21/CD23) + background di piccoli B depongono per NLPBL. ⚠ MUM1 forte+ diffuso in giovane (Waldeyer/testa-collo) → LBCL-IRF4 (confermare FISH IRF4)."
     },
 
     // Step 2: rosette come CONFERMA di supporto (non defining)
@@ -1362,7 +1441,8 @@ const TREE = {
       options: [
         { label: "FISH neg → DLBCL GCB double expressor", removes: ["HGBL_NOS"], next: "result_DLBCL_GCB" },
         { label: "FISH neg MA morfologia blastoide/intermedia (DLBCL/Burkitt) → HGBL NOS", removes: [], next: "result_HGBL_NOS" },
-        { label: "FISH pos → HGBL-DH/TH",                 removes: ["DLBCL_GCB"], next: "result_HGBL_DH"  }
+        { label: "FISH pos: MYC + BCL2 (± BCL6) → HGBL-DH/TH", removes: ["DLBCL_GCB"], next: "result_HGBL_DH"  },
+        { label: "FISH pos: MYC + BCL6, BCL2 NEGATIVO → vedi classificazione", removes: ["DLBCL_GCB"], next: "result_HGBL_MYC_BCL6"  }
       ],
       differential: null,
       trap: null
@@ -1388,7 +1468,8 @@ const TREE = {
       options: [
         { label: "FISH neg → DLBCL non-GCB double expressor", removes: ["HGBL_NOS"], next: "result_DLBCL_nonGCB" },
         { label: "FISH neg MA morfologia blastoide/intermedia (DLBCL/Burkitt) → HGBL NOS", removes: [], next: "result_HGBL_NOS" },
-        { label: "FISH pos → HGBL-DH/TH",                     removes: ["DLBCL_nonGCB"], next: "result_HGBL_DH"      }
+        { label: "FISH pos: MYC + BCL2 (± BCL6) → HGBL-DH/TH", removes: ["DLBCL_nonGCB"], next: "result_HGBL_DH"      },
+        { label: "FISH pos: MYC + BCL6, BCL2 NEGATIVO → vedi classificazione", removes: ["DLBCL_nonGCB"], next: "result_HGBL_MYC_BCL6"      }
       ],
       differential: null,
       trap: null
@@ -1496,6 +1577,8 @@ const TREE = {
     // ════════════════════ NODI RISULTATO ════════════════════════
     result_FL:        { type: "result", entity: "FL"        },
     result_FLBCL:     { type: "result", entity: "FLBCL"     },
+    result_PTFL:      { type: "result", entity: "PTFL"      },
+    result_LBCL_IRF4: { type: "result", entity: "LBCL_IRF4" },
     result_MCL:       { type: "result", entity: "MCL"       },
     result_NLPBL:     { type: "result", entity: "NLPBL"     },
     result_MZL:       { type: "result", entity: "MZL"       },
@@ -1504,6 +1587,7 @@ const TREE = {
     result_DLBCL_GCB:    { type: "result", entity: "DLBCL_GCB"    },
     result_DLBCL_nonGCB: { type: "result", entity: "DLBCL_nonGCB" },
     result_HGBL_DH:   { type: "result", entity: "HGBL_DH"   },
+    result_HGBL_MYC_BCL6: { type: "result", entity: "HGBL_MYC_BCL6" },
     result_BURKITT:   { type: "result", entity: "BURKITT"   },
     result_PMBL:      { type: "result", entity: "PMBL"      },
     result_THRLBCL:   { type: "result", entity: "THRLBCL"   },
@@ -1906,8 +1990,9 @@ function renderResult(entityKey, leftContainer, rightContainer) {
   const TAGLIA = {
     FL: 'piccola e media taglia', FLBCL: 'grande taglia', MCL: 'piccola e media taglia',
     NLPBL: 'grande taglia', MZL: 'piccola e media taglia', CLL: 'piccola taglia',
+    PTFL: 'media taglia / blastoide', LBCL_IRF4: 'grande taglia',
     DLBCL: 'grande taglia', DLBCL_GCB: 'grande taglia', DLBCL_nonGCB: 'grande taglia',
-    HGBL_DH: 'grande taglia', BURKITT: 'media taglia', PMBL: 'grande taglia',
+    HGBL_DH: 'grande taglia', HGBL_MYC_BCL6: 'taglia medio-grande / blastoide', BURKITT: 'media taglia', PMBL: 'grande taglia',
     THRLBCL: 'grande taglia', MCL_BLAST: 'taglia medio-grande', MCL_PLEO: 'grande taglia',
     HGBL_NOS: 'taglia medio-grande / blastoide', HCL: 'media taglia', LPL: 'piccola taglia'
   };
@@ -2606,7 +2691,7 @@ function validateTree() {
 function runSelfCheck() {
   const problems = validateTree();
   if (problems.length === 0) {
-    console.info('✓ Self-check TREE: nessun problema strutturale.');
+    console.log('✓ Self-check TREE: nessun problema strutturale.');
     return;
   }
   console.error('✗ Self-check TREE — problemi rilevati:\n' + problems.map(p => ' • ' + p).join('\n'));
@@ -2619,7 +2704,10 @@ function runSelfCheck() {
 }
 
 // ======================== INIT ========================
-document.addEventListener('DOMContentLoaded', () => { runSelfCheck(); resetWizard(); });
+document.addEventListener('DOMContentLoaded', () => {
+  try { runSelfCheck(); } catch (e) { /* self-check diagnostico non critico: non deve impedire l'avvio */ }
+  resetWizard();
+});
 </script>
 </body>
 </html>
