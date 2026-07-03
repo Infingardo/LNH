@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Algoritmo Diagnostico LNH B</title>
+<title>Algoritmo Diagnostico Linfomi — LNH · LH</title>
 <style>
   /* ==================== FLOWCHART / PRINT CSS (invariato) ==================== */
   @media print {
@@ -190,7 +190,7 @@
 <div id="app-wizard" class="app-wizard">
 
   <div class="app-header">
-    <h1>Algoritmo Diagnostico LNH B <small style="font-weight:400;font-size:0.85em;color:#5c6bc0">WHO-HAEM5 · ICC 2022</small></h1>
+    <h1>Algoritmo Diagnostico Linfomi — LNH · LH <small style="font-weight:400;font-size:0.85em;color:#5c6bc0">WHO-HAEM5 · ICC 2022</small></h1>
     <div class="app-header-controls">
       <button class="app-btn-ctrl secondary" onclick="togglePrintMode()">⊞ Flowchart</button>
       <button class="app-btn-ctrl secondary" onclick="resetAll()">↺ Ricomincia</button>
@@ -932,6 +932,184 @@ const ENTITIES = {
     ],
     notes: "MYD88 L265P è il marcatore molecolare chiave, ma assente in ~10% dei casi: la sua negatività non esclude LPL/WM, ma impone workup alternativo e ha implicazioni prognostiche (risposta inferiore a ibrutinib).",
     hgbl_banner: false
+  },
+
+  // ===================== T/NK-cell lymphomas (WHO-HAEM5 / ICC 2022) =====================
+  AITL: {
+    name: "Linfoma T follicular helper, tipo angioimmunoblastico (nTFHL-AI, WHO-HAEM5) / AITL (ICC 2022)",
+    pattern: ["diffuso"],
+    morphology: "Proliferazione polimorfa paracorticale con cellule T di taglia medio-piccola a citoplasma chiaro; marcata proliferazione di venule ad endotelio alto (HEV) ed espansione di reti di cellule dendritiche follicolari (FDC) extrafollicolari; immunoblasti B EBV+ frammisti",
+    ihc_pos: ["CD3", "CD4", "PD1", "CXCL13", "ICOS", "BCL6", "CD10"],
+    ihc_neg: ["CD8 (di norma)"],
+    classico_markers: ["CD3", "CD4", "PD1", "CXCL13"],
+    l2core: [
+      "Clonalità TCR (PCR/NGS) — conferma clonalità T",
+      "CD21/CD23 IHC — dimostra le reti FDC espanse perivascolari (utile morfo-conferma)",
+      "EBER-ISH — immunoblasti B EBV+ nel contesto (non confondere con DLBCL EBV+)"
+    ],
+    l2opt: [
+      "NGS: mutazioni TET2, DNMT3A (precoci/clonali), RHOA G17V, IDH2 R172 — profilo TFH tipico",
+      "Escludere proliferazione B EBV+ clonale associata (rischio di trasformazione/EBV+ DLBCL)"
+    ],
+    traps: [
+      "Almeno 2–3 marcatori TFH richiesti per l'attribuzione di fenotipo TFH (CD10, BCL6, PD1, CXCL13, ICOS): un singolo marcatore non basta",
+      "Immunoblasti B EBV+ CD20+/CD30+ possono simulare cHL o DLBCL: valutare il contesto T neoplastico di fondo",
+      "Espansione FDC (CD21+) fuori dai follicoli è un indizio morfologico chiave — non presente nei PTCL-NOS",
+      "RHOA G17V + IDH2 fortemente suggestivi ma non necessari per la diagnosi"
+    ],
+    notes: "WHO-HAEM5 raggruppa gli nTFHL (angioimmunoblastico, follicolare, NOS); ICC 2022 mantiene il termine AITL come entità con i sottotipi correlati.",
+    hgbl_banner: false
+  },
+
+  PTCL_NOS: {
+    name: "Linfoma T periferico, NOS (PTCL-NOS)",
+    pattern: ["diffuso"],
+    morphology: "Infiltrato T neoplastico diffuso, prevalentemente di cellule medio-grandi pleomorfe, che cancella l'architettura linfonodale; diagnosi di esclusione dopo aver escluso le entità T definite",
+    ihc_pos: ["CD3", "CD4 (variabile)"],
+    ihc_neg: ["CD30 (di norma, o focale)", "ALK", "CD10", "EBER (di norma)"],
+    classico_markers: ["CD3"],
+    l2core: [
+      "Clonalità TCR (PCR/NGS) — conferma clonalità T",
+      "Pannello T completo (CD2/CD5/CD7/CD4/CD8/CD30/ALK/CD10/PD1/CXCL13) per escludere entità definite"
+    ],
+    l2opt: [
+      "GEP: sottogruppi PTCL-GATA3 (prognosi peggiore) vs PTCL-TBX21",
+      "Escludere fenotipo TFH (→ nTFHL/AITL) e origine cutanea/leucemica"
+    ],
+    traps: [
+      "Diagnosi di ESCLUSIONE: prima escludere AITL/nTFHL, ALCL, ENKTL, ATLL, linfomi T a sede specifica",
+      "Perdita di antigeni pan-T (CD5, CD7) è frequente e supporta la clonalità/neoplasia",
+      "CD30 può essere focale/eterogeneo: se forte e diffuso rivalutare per ALCL"
+    ],
+    notes: "Categoria eterogenea di esclusione. GEP identifica sottogruppi TBX21 e GATA3 con impatto prognostico.",
+    hgbl_banner: false
+  },
+
+  ALCL_ALK_POS: {
+    name: "Linfoma anaplastico a grandi cellule, ALK+ (ALCL ALK+)",
+    pattern: ["diffuso"],
+    morphology: "Cellule grandi pleomorfe con hallmark cells (nuclei reniformi/a ferro di cavallo, area paranucleare eosinofila); crescita coesiva a pattern sinusoidale possibile",
+    ihc_pos: ["CD30", "ALK", "EMA", "CD4 (spesso)"],
+    ihc_neg: ["CD15", "EBER", "CD20", "PAX5"],
+    classico_markers: ["CD30", "ALK"],
+    l2core: [
+      "ALK IHC (pattern: citoplasmatico+nucleare in t(2;5) NPM-ALK; solo citoplasmatico in varianti) — sufficiente come surrogato del riarrangiamento",
+      "FISH ALK — nei casi dubbi o pattern IHC atipico"
+    ],
+    l2opt: [
+      "Clonalità TCR (PCR) — frequentemente clonale anche se antigeni T persi (null phenotype)",
+      "Marcatori citotossici (TIA1, granzima B, perforina) spesso +"
+    ],
+    traps: [
+      "CD30 deve essere forte e DIFFUSO (a differenza del CD30 focale del PTCL-NOS)",
+      "Può essere ALK+ con fenotipo 'null' (antigeni T persi): non escludere per CD3−",
+      "ALK+ ha prognosi migliore dell'ALK− — la distinzione è clinicamente rilevante",
+      "CD15 è di norma negativo: se CD15+/CD30+ considerare cHL"
+    ],
+    notes: "ALK+ tipicamente giovane adulto, prognosi favorevole. t(2;5) NPM::ALK è la traslocazione più comune.",
+    hgbl_banner: false
+  },
+
+  ALCL_ALK_NEG: {
+    name: "Linfoma anaplastico a grandi cellule, ALK− (ALCL ALK−)",
+    pattern: ["diffuso"],
+    morphology: "Morfologia sovrapponibile all'ALK+ (hallmark cells, CD30 forte e diffuso) ma senza espressione di ALK",
+    ihc_pos: ["CD30", "EMA (variabile)"],
+    ihc_neg: ["ALK", "CD15", "EBER", "PAX5"],
+    classico_markers: ["CD30"],
+    l2core: [
+      "ALK IHC/FISH — negativo per definizione",
+      "FISH DUSP22 (6p25.3) e TP63 (3q28) — stratificazione prognostica (DUSP22-R prognosi favorevole; TP63-R sfavorevole)"
+    ],
+    l2opt: [
+      "Clonalità TCR (PCR)",
+      "Escludere cHL (CD15/PAX5/CD45) e PTCL-NOS con CD30 (CD30 forte e diffuso favorisce ALCL)"
+    ],
+    traps: [
+      "Distinguere da PTCL-NOS CD30+: nell'ALCL− il CD30 è uniformemente forte e diffuso",
+      "Distinguere da cHL: nell'ALCL− PAX5 è negativo (nel cHL è debolmente +) e CD15 è tipicamente −",
+      "Escludere ALCL cutaneo primario e ALCL mammario associato a impianto (BIA-ALCL) — entità distinte a prognosi migliore",
+      "DUSP22-R e TP63-R hanno impatto prognostico opposto"
+    ],
+    notes: "ICC 2022 e WHO-HAEM5 riconoscono la stratificazione molecolare (DUSP22, TP63). BIA-ALCL è entità separata.",
+    hgbl_banner: false
+  },
+
+  ENKTL: {
+    name: "Linfoma extranodale NK/T-cellulare, tipo nasale (ENKTL)",
+    pattern: ["diffuso"],
+    morphology: "Infiltrato angiocentrico e angiodistruttivo con necrosi ischemica estesa; cellule di taglia variabile; sede tipica naso/seni paranasali/palato",
+    ihc_pos: ["CD3 (citoplasmatico, CD3ε)", "CD56", "EBER (ISH)", "TIA1", "Granzima B"],
+    ihc_neg: ["CD3 di superficie", "CD5", "CD4", "CD8 (di norma)"],
+    classico_markers: ["CD56", "EBER"],
+    l2core: [
+      "EBER-ISH — POSITIVITÀ RICHIESTA per la diagnosi (praticamente costante)",
+      "Marcatori citotossici (TIA1, granzima B, perforina) — fenotipo citotossico"
+    ],
+    l2opt: [
+      "CD3ε citoplasmatico (il CD3 di superficie è assente nelle forme NK)",
+      "Clonalità TCR: policlonale nelle forme NK-derivate, clonale nelle rare forme T"
+    ],
+    traps: [
+      "EBER NEGATIVO mette in dubbio la diagnosi di ENKTL nasale — rivalutare",
+      "La necrosi estesa può rendere il campione paucicellulare/non diagnostico: campionare aree vitali",
+      "CD56− non esclude ENKTL se EBER+ e fenotipo citotossico presenti",
+      "DD con granulomatosi/infezioni nel distretto naso-sinusale"
+    ],
+    notes: "Fortemente associato a EBV; più frequente in Asia orientale e America centro-meridionale. Sede nasale tipica.",
+    hgbl_banner: false
+  },
+
+  MF: {
+    name: "Micosi fungoide (MF)",
+    pattern: ["diffuso"],
+    morphology: "Infiltrato dermico superficiale a banda di piccoli-medi linfociti T cerebriformi con epidermotropismo (linfociti allineati lungo la giunzione dermo-epidermica) e microascessi di Pautrier; stadi patch/plaque/tumore",
+    ihc_pos: ["CD3", "CD4", "CD45RO"],
+    ihc_neg: ["CD7 (perdita tipica)", "CD8 (di norma)", "CD30 (salvo trasformazione)"],
+    classico_markers: ["CD3", "CD4"],
+    l2core: [
+      "Clonalità TCR (PCR) su cute — supporta ma non definisce (può essere clonale anche in dermatiti)",
+      "Correlazione clinico-patologica OBBLIGATORIA (chiazze/placche, decorso indolente)"
+    ],
+    l2opt: [
+      "Rapporto CD4:CD8 alterato; perdita di CD7 e/o CD2/CD5",
+      "CD30 nelle aree di trasformazione a grandi cellule (impatto prognostico)"
+    ],
+    traps: [
+      "Diagnosi CLINICO-PATOLOGICA: la sola istologia iniziale (patch) è spesso aspecifica — non diagnosticare senza contesto clinico",
+      "Perdita di CD7 è utile ma presente anche in dermatiti infiammatorie",
+      "Trasformazione a grandi cellule CD30+ (>25%): non confondere con ALCL cutaneo primario/linfoproliferazioni CD30+",
+      "Sindrome di Sézary = variante leucemica/eritrodermica (interessamento ematico)"
+    ],
+    notes: "Linfoma cutaneo primario a cellule T più comune. Decorso indolente negli stadi iniziali; stadiazione TNMB.",
+    hgbl_banner: false
+  },
+
+  // ===================== Hodgkin classico (WHO-HAEM5 / ICC 2022) =====================
+  CHL: {
+    name: "Linfoma di Hodgkin classico (cHL)",
+    pattern: ["nodulare", "diffuso"],
+    morphology: "Cellule di Reed-Sternberg e Hodgkin (grandi, mono-/bi-nucleate, nucleoli eosinofili) sparse in un fondo infiammatorio ricco (linfociti, eosinofili, plasmacellule, istiociti); sottotipi: sclerosi nodulare (cellule lacunari, bande collagene), cellularità mista, ricco in linfociti, deplezione linfocitaria",
+    ihc_pos: ["CD30", "CD15", "PAX5 (debole)", "MUM1", "Fascin"],
+    ihc_neg: ["CD45", "CD20 (di norma o eterogeneo)", "CD3", "OCT2/BOB1 (ridotti)", "ALK", "EMA"],
+    classico_markers: ["CD30", "CD15", "CD45"],
+    l2core: [
+      "EBER-ISH — positività variabile (più frequente nella cellularità mista e in HIV+/immunodepressi)",
+      "PAX5 debole + OCT2/BOB1 ridotti — supporta l'origine B con programma trascrizionale spento"
+    ],
+    l2opt: [
+      "9p24.1 (PD-L1/PD-L2) amplificazione — razionale per anti-PD1 (contesto clinico)",
+      "CD20 può essere eterogeneamente + su una quota di cellule neoplastiche: non riclassificare come DLBCL"
+    ],
+    traps: [
+      "CD45− e CD20−/debole distinguono il cHL dai linfomi B a grandi cellule e dal NLPBL (CD20+/CD45+/CD15−)",
+      "PAX5 è DEBOLE (non forte come nei linfomi B): un PAX5 forte/diffuso orienta altrove",
+      "CD15 può essere negativo in una quota di cHL: non esclude la diagnosi se CD30+ e morfologia tipica",
+      "DD con ALCL (CD30+ CD15− PAX5− ALK±) e con THRLBCL/NLPBL (CD20+ CD45+)",
+      "Immunoblasti EBV+ dell'AITL possono simulare cellule RS: valutare il fondo T neoplastico"
+    ],
+    notes: "WHO-HAEM5 e ICC 2022 concordi. Distinzione critica dal NLPBL (già presente): il cHL è CD30+/CD15+/CD20−/CD45−, il NLPBL è CD20+/CD45+/BCL6+/CD30−/CD15−.",
+    hgbl_banner: false
   }
 };
 
@@ -990,7 +1168,7 @@ const TREE = {
     lineage_gate: {
       type: "choice",
       question: "CD3 / CD20 — doppia colorazione",
-      note: "Prima discriminazione di linea. Se T: questo algoritmo non si applica.",
+      note: "Prima discriminazione di linea. Se morfologia da Hodgkin (cellule grandi sparse — Reed-Sternberg/Hodgkin o 'popcorn' — in fondo infiammatorio ricco) usare la porta dedicata.",
       options: [
         {
           label: "CD20+ / CD3− → linfoma B (procedi)",
@@ -1000,7 +1178,12 @@ const TREE = {
         {
           label: "CD3+ / CD20− → linfoma T o NK",
           removes: [],
-          next: "t_cell_exit"
+          next: "tnk_gate"
+        },
+        {
+          label: "Cellule grandi sparse (RS/Hodgkin o 'popcorn') in fondo infiammatorio → sospetto Hodgkin",
+          removes: [],
+          next: "hodgkin_gate"
         },
         {
           label: "Ambiguo / doppio positivo / doppio negativo → prosegui con cautela",
@@ -1012,17 +1195,7 @@ const TREE = {
       trap: "CD20 può essere downregolato post-rituximab o negativizzato in varianti rare (DLBCL plasmoblastico). PAX5 e CD79a sono marcatori B alternativi. CD3 focale non debole non equivale a fenotipo T."
     },
 
-    // ── Uscita algoritmo — fenotipo T ─────────────────────────────
-    t_cell_exit: {
-      type: "result_note",
-      question: "CD3+ / CD20− — fuori dall'algoritmo LNH B",
-      note: "Questo algoritmo copre esclusivamente i linfomi B. Un profilo CD3+/CD20− orienta verso linfoma T o NK-cellulare.\n\nPassare all'algoritmo diagnostico T/NK. Se il fenotipo è inatteso rispetto alla morfologia, verificare controlli tecnici (CD20 può essere falsamente negativo) e considerare PAX5 / CD79a come marcatori B alternativi.",
-      options: [
-        { label: "← Ricomincia (rivaluta o nuova biopsia)", removes: [], next: "topo" }
-      ],
-      differential: [],
-      trap: null
-    },
+
 
     // ── Step 1: Architettura ──────────────────────────────────────
     arch: {
@@ -1595,7 +1768,69 @@ const TREE = {
     result_MCL_PLEO:  { type: "result", entity: "MCL_PLEO"  },
     result_HGBL_NOS:  { type: "result", entity: "HGBL_NOS"  },
     result_HCL:       { type: "result", entity: "HCL"       },
-    result_LPL:       { type: "result", entity: "LPL"       }
+    result_LPL:       { type: "result", entity: "LPL"       },
+
+    // ===================== SOTTOALBERO T/NK (WHO-HAEM5 / ICC 2022) =====================
+    tnk_gate: {
+      type: "choice",
+      question: "Profilo T/NK — sede e CD30",
+      note: "Fenotipo CD3+/CD20−. Orientamento in base a sede e CD30. Verificare sempre controlli tecnici (CD20 può essere falsamente negativo post-rituximab; PAX5/CD79a come marcatori B alternativi).",
+      options: [
+        { label: "Nodale, CD30− / CD30 focale → T periferico nodale", removes: [], next: "tnk_nodal" },
+        { label: "CD30 forte e diffuso → gruppo anaplastico (ALCL)", removes: [], next: "tnk_alcl" },
+        { label: "Extranodale naso-sinusale, angiocentrico/necrosi → NK/T nasale", removes: [], next: "result_ENKTL" },
+        { label: "Cute, epidermotropismo / chiazze-placche → micosi fungoide", removes: [], next: "result_MF" }
+      ],
+      differential: ["AITL", "PTCL_NOS", "ALCL_ALK_POS", "ALCL_ALK_NEG", "ENKTL", "MF"],
+      trap: "Il fenotipo TFH (CD10/BCL6/PD1/CXCL13/ICOS) va sempre ricercato in un T nodale: ≥2–3 marcatori TFH → nTFHL/AITL. CD30 focale non equivale ad ALCL."
+    },
+
+    tnk_nodal: {
+      type: "ihc",
+      question: "Marcatori TFH — CD10 / BCL6 / PD1 / CXCL13 / ICOS",
+      note: "Discriminante tra AITL/nTFHL (fenotipo TFH + reti FDC CD21+ espanse + venule HEV + immunoblasti EBV+) e PTCL-NOS (diagnosi di esclusione).",
+      options: [
+        { label: "≥2 marcatori TFH+ (± reti FDC CD21+ espanse, EBER+ su immunoblasti B) → AITL/nTFHL", removes: ["PTCL_NOS"], next: "result_AITL" },
+        { label: "TFH− / non dimostrabile, entità definite escluse → PTCL-NOS", removes: ["AITL"], next: "result_PTCL_NOS" }
+      ],
+      differential: ["AITL", "PTCL_NOS"],
+      trap: "PTCL-NOS è diagnosi di ESCLUSIONE: prima escludere AITL/nTFHL, ALCL, ENKTL, ATLL e linfomi T a sede specifica. La perdita di pan-T (CD5/CD7) supporta la clonalità ma non tipizza."
+    },
+
+    tnk_alcl: {
+      type: "ihc",
+      question: "ALCL — ALK (IHC/FISH)",
+      note: "CD30 forte e diffuso + hallmark cells. ALK+ (giovani, prognosi favorevole) vs ALK− (stratificare con FISH DUSP22/TP63). Escludere cHL (CD15+/PAX5 debole+) e ALCL cutaneo/BIA-ALCL.",
+      options: [
+        { label: "ALK+ (IHC citoplasmatico±nucleare o FISH ALK-R) → ALCL ALK+", removes: ["ALCL_ALK_NEG"], next: "result_ALCL_ALK_POS" },
+        { label: "ALK− (FISH DUSP22/TP63 per prognosi) → ALCL ALK−", removes: ["ALCL_ALK_POS"], next: "result_ALCL_ALK_NEG" }
+      ],
+      differential: ["ALCL_ALK_POS", "ALCL_ALK_NEG", "CHL"],
+      trap: "CD30 dell'ALCL è forte e DIFFUSO (nel PTCL-NOS è focale). ALCL può avere fenotipo 'null' (antigeni T persi): non escludere per CD3−. Se CD15+/PAX5 debole+ → cHL."
+    },
+
+    // ===================== BRANCH HODGKIN classico =====================
+    hodgkin_gate: {
+      type: "ihc",
+      question: "Sospetto Hodgkin — CD30 / CD15 / CD20 / CD45 / PAX5",
+      note: "Cellule di Reed-Sternberg/Hodgkin in fondo infiammatorio ricco. Distinzione cardine cHL vs NLPBL: il cHL è CD30+/CD15+/CD20−(o eterogeneo)/CD45−/PAX5 debole+; il NLPBL è CD20+/CD45+/BCL6+/CD30−/CD15−.",
+      options: [
+        { label: "CD30+ / CD15+ / CD45− / PAX5 debole+ / CD20−(o eterogeneo) → cHL", removes: ["NLPBL", "THRLBCL"], next: "result_CHL" },
+        { label: "CD20+ / CD45+ / BCL6+ / CD30− / CD15− (cellule LP 'popcorn') → NLPBL", removes: ["CHL"], next: "result_NLPBL" },
+        { label: "CD20+ diffuso, grandi cellule in fondo T/istiocitario, CD15− → considera THRLBCL", removes: [], next: "result_THRLBCL" }
+      ],
+      differential: ["CHL", "NLPBL", "THRLBCL", "ALCL_ALK_NEG"],
+      trap: "PAX5 nel cHL è DEBOLE (non forte come nei linfomi B). CD15 può mancare in una quota di cHL (non esclude). DD con ALCL ALK− (CD30+ CD15− PAX5−) e con immunoblasti EBV+ dell'AITL che simulano cellule RS."
+    },
+
+    // ===================== RESULT NODES T/NK + cHL =====================
+    result_AITL:          { type: "result", entity: "AITL"          },
+    result_PTCL_NOS:      { type: "result", entity: "PTCL_NOS"      },
+    result_ALCL_ALK_POS:  { type: "result", entity: "ALCL_ALK_POS"  },
+    result_ALCL_ALK_NEG:  { type: "result", entity: "ALCL_ALK_NEG"  },
+    result_ENKTL:         { type: "result", entity: "ENKTL"         },
+    result_MF:            { type: "result", entity: "MF"            },
+    result_CHL:           { type: "result", entity: "CHL"           }
   }
 };
 
@@ -1994,8 +2229,13 @@ function renderResult(entityKey, leftContainer, rightContainer) {
     DLBCL: 'grande taglia', DLBCL_GCB: 'grande taglia', DLBCL_nonGCB: 'grande taglia',
     HGBL_DH: 'grande taglia', HGBL_MYC_BCL6: 'taglia medio-grande / blastoide', BURKITT: 'media taglia', PMBL: 'grande taglia',
     THRLBCL: 'grande taglia', MCL_BLAST: 'taglia medio-grande', MCL_PLEO: 'grande taglia',
-    HGBL_NOS: 'taglia medio-grande / blastoide', HCL: 'media taglia', LPL: 'piccola taglia'
+    HGBL_NOS: 'taglia medio-grande / blastoide', HCL: 'media taglia', LPL: 'piccola taglia',
+    CHL: 'cellule sparse grandi (RS/Hodgkin) in fondo infiammatorio', AITL: 'piccola-media taglia (T), polimorfa',
+    PTCL_NOS: 'medio-grande taglia', ALCL_ALK_POS: 'grande taglia (anaplastica)', ALCL_ALK_NEG: 'grande taglia (anaplastica)',
+    ENKTL: 'taglia variabile, angiocentrica', MF: 'piccola-media taglia (cerebriforme)'
   };
+  const lineage = LINEAGE_GROUP[entityKey] || 'B';
+  const refTitleTag = lineageRefTag(lineage);
   const taglia = TAGLIA[entityKey] || 'taglia non specificata';
   // Morfologia per il referto: prefisso di taglia (da TAGLIA) + citologia senza l'aggettivo di taglia ridondante
   let cyto = entity.morphology
@@ -2006,6 +2246,10 @@ function renderResult(entityKey, leftContainer, rightContainer) {
   // Riga diagnostica in forma referto. NLPBL: in WHO-HAEM5 è linfoma di Hodgkin (B-NHL solo per ICC 2022)
   const dxLine = (entityKey === 'NLPBL')
     ? `Linfoma a predominanza linfocitaria nodulare (${dxName}), sec. WHO-HAEM5 (5ª ed., 2024) — classificato tra i linfomi di Hodgkin a fenotipo B; ICC 2022: linfoma a cellule B.`
+    : (entityKey === 'CHL')
+    ? `Linfoma di Hodgkin classico: ${dxName}, sec. WHO-HAEM5 (5ª ed., 2024) / ICC 2022.`
+    : (lineage === 'T')
+    ? `Linfoma non-Hodgkin a cellule T/NK: ${dxName}, sec. WHO-HAEM5 (5ª ed., 2024) / ICC 2022.`
     : `Linfoma non-Hodgkin a cellule B: ${dxName}, sec. WHO-HAEM5 (5ª ed., 2024).`;
   // Immunofenotipo compatto dai marcatori realmente refertati: positivi; negativi
   const posMk = recordedMk.filter(([, v]) => v === '+').map(([k]) => `${k}+`);
@@ -2018,7 +2262,7 @@ function renderResult(entityKey, leftContainer, rightContainer) {
     FL: 'Grading 1–3A non richiesto come categoria obbligatoria (WHO-HAEM5).'
   };
   const refLines = [
-    'REFERTO — Algoritmo diagnostico LNH B',
+    `REFERTO — Algoritmo diagnostico ${refTitleTag}`,
     SEP,
     `Pattern / morfologia: ${morfoLine}`,
     '',
@@ -2102,7 +2346,9 @@ function copyReferto() {
 
 // ======================== Referto Panel IHC ========================
 function buildPanelRefertoText(r, idx, active) {
-  const morph = panelState.morph === 'small' ? 'piccole cellule' : 'grandi cellule';
+  const morph = panelState.morph === 'small' ? 'piccole cellule'
+              : panelState.morph === 'large' ? 'grandi cellule'
+              : 'linee T/NK · Hodgkin';
   const topo  = panelState.topo || 'non specificata';
   // Immunofenotipo dai marcatori realmente inseriti nel Panel
   const mk = panelMarkerList();
@@ -2118,13 +2364,15 @@ function buildPanelRefertoText(r, idx, active) {
   const dxName  = r.name.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
   const compat  = idx === 0 ? 'maggiormente compatibile con' : 'compatibile con';
   const entity  = r.entityKey ? ENTITIES[r.entityKey] : null;
+  const lineage = r.entityKey ? (LINEAGE_GROUP[r.entityKey] || 'B') : 'B';
+  const refTitleTag = lineageRefTag(lineage);
   const others  = active.filter((_, i) => i !== idx).map(a => a.name.replace(/\s*\([^)]*\)\s*/g, ' ').trim());
   const lines = [
-    'REFERTO — Algoritmo diagnostico LNH B (Panel IHC)',
+    `REFERTO — Algoritmo diagnostico ${refTitleTag} (Panel IHC)`,
     '='.repeat(58),
     `Pattern: ${morph} · sede: ${topo}`,
     '',
-    `Quadro immunofenotipico ${compat}: ${dxName}, sec. WHO-HAEM5 (5ª ed., 2024).`,
+    `Quadro immunofenotipico ${compat}: ${dxName}, sec. WHO-HAEM5 (5ª ed., 2024) / ICC 2022.`,
     '',
     `Immunofenotipo: ${ip}.`
   ];
@@ -2196,7 +2444,38 @@ const PANEL_MARKERS = {
     { key: 'MUM1',  label: 'MUM1 / IRF4' },
     { key: 'MYC',   label: 'MYC IHC', note: '≥40%' },
     { key: 'Ki67',  label: 'Ki67', quantitative: true, note: '%' }
+  ],
+  tnk: [
+    { key: 'CD30',   label: 'CD30'   },
+    { key: 'CD15',   label: 'CD15'   },
+    { key: 'CD45',   label: 'CD45 / LCA' },
+    { key: 'PAX5',   label: 'PAX5', note: 'debole nel cHL' },
+    { key: 'ALK',    label: 'ALK'    },
+    { key: 'EMA',    label: 'EMA'    },
+    { key: 'CD20',   label: 'CD20'   },
+    { key: 'CD79a',  label: 'CD79a'  },
+    { key: 'CD3',    label: 'CD3'    },
+    { key: 'CD4',    label: 'CD4'    },
+    { key: 'CD8',    label: 'CD8'    },
+    { key: 'CD5',    label: 'CD5'    },
+    { key: 'CD7',    label: 'CD7'    },
+    { key: 'CD56',   label: 'CD56'   },
+    { key: 'PD1',    label: 'PD1 / CD279' },
+    { key: 'CXCL13', label: 'CXCL13' },
+    { key: 'CD10',   label: 'CD10'   },
+    { key: 'BCL6',   label: 'BCL6'   },
+    { key: 'MUM1',   label: 'MUM1 / IRF4' },
+    { key: 'EBER',   label: 'EBER (ISH)' }
   ]
+}
+
+// Gruppo di lineage per intestazione referto e riga diagnostica (usato da wizard e panel mode)
+const LINEAGE_GROUP = {
+  CHL: 'HL', NLPBL: 'HL',
+  AITL: 'T', PTCL_NOS: 'T', ALCL_ALK_POS: 'T', ALCL_ALK_NEG: 'T', ENKTL: 'T', MF: 'T'
+};
+function lineageRefTag(lineage) {
+  return lineage === 'HL' ? 'LH' : (lineage === 'T' ? 'LNH T/NK' : 'LNH B');
 };
 
 // Asse milza/sangue/BM: marker HCL-specifici mostrati solo qui (STEP 0 topografico)
@@ -2248,6 +2527,36 @@ const PANEL_RULES = {
     { id:'HGBL',       name:'HGBL-NOS / Burkitt (da escludere)',
       required_pos:[], required_neg:['BCL1'], required_any:null, ki67_threshold:80,
       expected_pos:['CD10','BCL6'], expected_neg:['BCL2','BCL1'], base:3 }
+  ],
+  tnk: [
+    { id:'CHL',        name:'Hodgkin classico (cHL)',
+      required_pos:['CD30'], required_neg:['CD45'], required_any:null,
+      exclusion_pos:['ALK'],
+      expected_pos:['CD15','PAX5','MUM1'], expected_neg:['CD20','EMA','CD3'], base:7 },
+    { id:'NLPBL',      name:'NLPBL (predominanza linfocitaria nodulare)',
+      required_pos:['CD20','CD45'], required_neg:['CD15'], required_any:['BCL6'],
+      exclusion_pos:['CD30'],
+      expected_pos:['CD79a','EMA'], expected_neg:['CD30','CD15'], base:6 },
+    { id:'ALCL_POS',   name:'ALCL ALK+',
+      required_pos:['CD30','ALK'], required_neg:[], required_any:null,
+      expected_pos:['EMA','CD4'], expected_neg:['CD15','CD20','PAX5'], base:8 },
+    { id:'ALCL_NEG',   name:'ALCL ALK−',
+      required_pos:['CD30'], required_neg:['ALK'], required_any:null,
+      exclusion_pos:['CD15'],
+      expected_pos:['EMA'], expected_neg:['CD15','PAX5','CD20'], base:5 },
+    { id:'AITL',       name:'AITL / nTFHL-AI (fenotipo TFH)',
+      required_pos:['CD3'], required_neg:[], required_any:['PD1','CXCL13','CD10','BCL6'],
+      expected_pos:['CD4'], expected_neg:['CD20','CD30','ALK'], base:6 },
+    { id:'PTCL',       name:'PTCL-NOS (diagnosi di esclusione)',
+      required_pos:['CD3'], required_neg:['ALK'], required_any:null,
+      expected_pos:['CD4'], expected_neg:['CD30','EBER','CD10','CXCL13','PD1'], base:3 },
+    { id:'ENKTL',      name:'NK/T nasale (EBER+)',
+      required_pos:['EBER'], required_neg:[], required_any:['CD56','CD3'],
+      expected_pos:['CD56'], expected_neg:['CD5','CD4'], base:6 },
+    { id:'MF',         name:'Micosi fungoide (cute)',
+      required_pos:['CD3','CD4'], required_neg:[], required_any:null,
+      exclusion_pos:['ALK'],
+      expected_pos:[], expected_neg:['CD7','CD8','CD30'], base:4 }
   ]
 };
 
@@ -2370,6 +2679,14 @@ function computePanelDiagnosis(markers, morph, topo) {
                : rule.id === 'CLL'         ? 'CLL'
                : rule.id === 'MZL'         ? 'MZL'
                : rule.id === 'LPL'         ? 'LPL'
+               : rule.id === 'CHL'         ? 'CHL'
+               : rule.id === 'NLPBL'       ? 'NLPBL'
+               : rule.id === 'ALCL_POS'    ? 'ALCL_ALK_POS'
+               : rule.id === 'ALCL_NEG'    ? 'ALCL_ALK_NEG'
+               : rule.id === 'AITL'        ? 'AITL'
+               : rule.id === 'PTCL'        ? 'PTCL_NOS'
+               : rule.id === 'ENKTL'       ? 'ENKTL'
+               : rule.id === 'MF'          ? 'MF'
                : null,
       score: excluded ? -999 : score,
       excluded, excludeReasons: exR, conflicts, matched, missing: missingUniq
@@ -2462,6 +2779,11 @@ function renderPanelMorph(left, right) {
           onclick="panelState.morph='large';panelState.markers={};panelState.step='panel';renderPanelMode()">
           <strong>Grandi cellule</strong>
           <small>Centroblasti, immunoblasti, cellule anaplastiche</small>
+        </button>
+        <button class="pnl-morph-btn${panelState.morph === 'tnk' ? ' selected' : ''}"
+          onclick="panelState.morph='tnk';panelState.markers={};panelState.step='panel';renderPanelMode()">
+          <strong>Linee T/NK · Hodgkin</strong>
+          <small>Cellule sparse RS/Hodgkin, anaplastiche, T periferiche, NK/T, MF</small>
         </button>
       </div>
       <button class="app-back" onclick="panelState.step='topo';renderPanelMode()">← Indietro</button>
