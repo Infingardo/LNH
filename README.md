@@ -2,7 +2,7 @@
 
 App interattiva a pagina singola (HTML/JS, nessuna dipendenza) per il ragionamento diagnostico nei linfomi, allineata a **WHO-HAEM5** e **ICC 2022**. Copre linfomi non-Hodgkin a cellule **B**, linfomi **T/NK** e linfoma di **Hodgkin classico**.
 
-**App online:** https://infingardo.github.io/LNHB/
+**App online:** https://infingardo.github.io/LNH/
 
 ## Contenuti
 - **Gate di linea** iniziale (CD3/CD20) che smista verso il percorso B, T/NK o Hodgkin.
